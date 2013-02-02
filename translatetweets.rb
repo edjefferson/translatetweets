@@ -1,5 +1,12 @@
 require 'twitter'
 require 'pg'
+require 'microsoft_translator'
+
+
+
+translator = MicrosoftTranslator::Client.new(ENV['MTCLIENTID'], ENV['MTCLIENTSECRET'])
+
+
 
 
 
@@ -22,9 +29,8 @@ end
   end
   
 
-  LatestTweet = LeTwitter.search("from:#{ENV['TWITTERHANDLE']}", :count => 25, :result_type => "recent").results.reverse.each do |status|
+  LatestTweet = LeTwitter.search("from:#{ENV['TWITTERHANDLE']}", :count => 1, :result_type => "recent").results.reverse.each do |status|
     conn = PGconn.connect(ENV['DB_ADDRESS'], ENV['DB_PORT'], '', '', ENV['DB_NAME'], ENV['DB_USER'], ENV['DB_PASSWORD'])
-    
     readout = conn.query("SELECT * from tweets").values.to_a
     @last25 = Array.new
     readout.each_with_index do |x , y|
@@ -38,28 +44,27 @@ end
     sid=tweetid.to_s
     
     if !@last25.include?sid
-    
       
+      translatedtweet = translator.translate(tweettext,"en","fr","text/html")
+      puts translatedtweet
+=begin
     
-      strippedtweet = my_strip tweettext.to_s, "[\\\""
+      strippedtweet = my_strip translatetedtweet.to_s, "[\\\""
       strippedtweet2 = my_strip strippedtweet.to_s, "\\\"]"
       
-      splittweet=strippedtweet2.split(' ')
+      splittweet=translatedtweet.split(' ')
       splittweet.each_with_index do |x, y|
         if splittweet[y][0,1]=="@"
-          splittweet[y].gsub!("@","")
-          splittweet[y] << "@"
-        elsif splittweet[y][0,4]=="http"
-          splittweet[y].reverse!
+          splittweet[y].gsub!("@","@le")
         end
       end
-      reverse_tweet=splittweet.join(" ")  
+      finaltweet=splittweet.join(" ")  
 
-      puts reverse_tweet.to_s.reverse
+      puts finaltweet
 
-      Twitter.update(reverse_tweet.to_s.reverse)
+      #Twitter.update(finaltweet)
       
-      
+=end
       
       
 
