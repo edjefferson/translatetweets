@@ -59,7 +59,9 @@ end
           splittweet[y].gsub!("@","@#{prefix}")
         end
       end
-      finaltweet=splittweet.join(" ")  
+      finaltweet=splittweet.join(" ") 
+      putsfinaltweet.length
+      puts.finaltweet[0..143].length 
       if finaltweet.length<141
         puts finaltweet
         Twitter.update(finaltweet)
