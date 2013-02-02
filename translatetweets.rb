@@ -58,7 +58,7 @@ end
           prefix=["le","la","un","une"].sample
           splittweet[y].gsub!("@","@#{prefix}")
         end
-      
+      end
       finaltweet=splittweet.join(" ")  
       if finaltweet.length<141
         puts finaltweet
