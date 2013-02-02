@@ -47,9 +47,9 @@ end
       
       translatedtweet = translator.translate(tweettext,"en","fr","text/html")
       puts translatedtweet
-=begin
+
     
-      strippedtweet = my_strip translatetedtweet.to_s, "[\\\""
+      strippedtweet = my_strip translatedtweet.to_s, "[\\\""
       strippedtweet2 = my_strip strippedtweet.to_s, "\\\"]"
       
       splittweet=translatedtweet.split(' ')
@@ -62,13 +62,13 @@ end
 
       puts finaltweet
 
-      #Twitter.update(finaltweet)
+      Twitter.update(finaltweet)
       
-=end
+
       
       
 
-      if conn.query("select  count(id) from tweets;").values.to_a[0][0].to_i>24
+      if conn.query("select  count(id) from tweets;").values.to_a[0][0].to_i>25
         conn.query("DELETE FROM tweets using (select min(id) from tweets) r where id=r.min;")
       end
       
