@@ -69,7 +69,7 @@ end
       
       
 
-      
+      end
       
 
       if conn.query("select  count(id) from tweets;").values.to_a[0][0].to_i>25
