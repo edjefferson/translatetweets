@@ -60,10 +60,13 @@ end
         end
       end
       finaltweet=splittweet.join(" ")  
-
-      puts finaltweet
-
-      Twitter.update(finaltweet)
+      if finaltweet.length<141
+        puts finaltweet
+        Twitter.update(finaltweet)
+      else  
+        puts finaltweet[0..143]
+        Twitter.update(finaltweet[0..143])
+      
       
 
       
