@@ -55,7 +55,8 @@ end
       splittweet=translatedtweet.split(' ')
       splittweet.each_with_index do |x, y|
         if splittweet[y][0,1]=="@"
-          splittweet[y].gsub!("@","@le")
+          ["le","la","un","une"].sample
+          splittweet[y].gsub!("@","@#{prefix}")
         end
       end
       finaltweet=splittweet.join(" ")  
