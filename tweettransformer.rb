@@ -63,9 +63,9 @@ class String
         results = dino.lookup(splittweet[y].gsub!("@",""))
         puts results(syn)
         splittweet[y] << "@"
-      elsif splittweet[y][0,4]=="http"
-        splittweet[y].reverse!
       end
+      results = dino.lookup(splittweet[y].gsub!("@",""))
+      puts results(syn)
     end
     return splittweet.join(" ")
     
