@@ -1,12 +1,48 @@
 require 'microsoft_translator'
 require 'dinosaurus'
+require 'engtagger'
 
 def my_strip(string, chars)
   chars = Regexp.escape(chars)
   string.gsub(/\A[#{chars}]+|[#{chars}]+\Z/, "")
 end
 
+
+
+class EngTagger
+  NNS    = EngTagger.get_ext('nns')
+  def get_plural_nouns(tagged)
+    return nil unless valid_text(tagged)
+    NNS
+    trimmed = tagged.scan(NNS).map do |n|
+      strip_tags(n)
+    end
+    ret = Hash.new(0)
+    trimmed.each do |n|
+      n = stem(n)
+      next unless n.length < 100  # sanity check on word length
+      ret[n] += 1 unless n =~ /\A\s*\z/
+    end
+    return ret
+  end
+  
+end
+
+
+
 class String
+  
+  
+  def trekalyser
+    tgr = EngTagger.new
+    tagged = tgr.add_tags(self)
+    startrekwords = ["Picard", "Enterprise", "Data", "Beverley", "Riker", "Wesley", "Guinan", "Troi"]
+    nouns = tgr.get_nouns(tagged)
+    nouns.keys.each do |x|
+      self.gsub!(x,startrekwords.sample)
+    end
+    return self
+  end
 
   def translatetweet
     @translator = MicrosoftTranslator::Client.new(ENV['MTCLIENTID'], ENV['MTCLIENTSECRET'])
