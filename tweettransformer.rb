@@ -1,4 +1,5 @@
 require 'microsoft_translator'
+require 'dinosaurus'
 
 def my_strip(string, chars)
   chars = Regexp.escape(chars)
@@ -46,6 +47,30 @@ class String
     end
     return splittweet.join(" ").reverse 
   end 
+  
+  def syntweet
+    dino = Dinosaurus.configure do |config|
+      config.api_key = ENV['DINOAPIKEY']
+    end
+    
+    strippedtweet = my_strip self.to_s, "[\\\""
+    strippedtweet2 = my_strip strippedtweet.to_s, "\\\"]"
+    
+    splittweet=strippedtweet2.split(' ')
+    splittweet.each_with_index do |x, y|
+      if splittweet[y][0,1]=="@"
+        
+        results = dino.lookup(splittweet[y].gsub!("@",""))
+        puts results(syn)
+        splittweet[y] << "@"
+      elsif splittweet[y][0,4]=="http"
+        splittweet[y].reverse!
+      end
+    end
+    return splittweet.join(" ")
+    
+  end
+    
   
   def trim140
     tweet = self
