@@ -1,19 +1,19 @@
 require 'twitter'
 require 'pg'
-require 'microsoft_translator'
 
-
-
-translator = MicrosoftTranslator::Client.new(ENV['MTCLIENTID'], ENV['MTCLIENTSECRET'])
-
+require './tweettransformer.rb'
 
 
 
 
-def my_strip(string, chars)
-  chars = Regexp.escape(chars)
-  string.gsub(/\A[#{chars}]+|[#{chars}]+\Z/, "")
+if ARGV.count <= 2
+  puts "include some arguments you idoit" 
+  abort
+   
 end
+
+
+puts ARGV[1].class
 
 
   
@@ -29,7 +29,7 @@ end
   end
   
 
-  LatestTweet = LeTwitter.search("from:#{ENV['TWITTERHANDLE']}", :count => ARGV[0], :result_type => "recent").results.reverse.each do |status|
+  LatestTweet = LeTwitter.search("from:#{ENV['TWITTERHANDLE']}", :count => ARGV[0][0], :result_type => "recent").results.reverse.each do |status|
     conn = PGconn.connect(ENV['DB_ADDRESS'], ENV['DB_PORT'], '', '', ENV['DB_NAME'], ENV['DB_USER'], ENV['DB_PASSWORD'])
     readout = conn.query("SELECT * from tweets").values.to_a
     @last50 = Array.new
@@ -45,31 +45,12 @@ end
     
     if !@last50.include?sid
       
-      translatedtweet = translator.translate(tweettext,"en","fr","text/html")
-      puts translatedtweet
 
-    
-      strippedtweet = my_strip translatedtweet.to_s, "[\\\""
-      strippedtweet2 = my_strip strippedtweet.to_s, "\\\"]"
+      finaltweet=tweettext.send(ARGV[1]).trim140
+      puts finaltweet
       
-      splittweet=translatedtweet.split(' ')
-      splittweet.each_with_index do |x, y|
-        if splittweet[y][0,1]=="@"
-          prefix=["le","la","un","une"].sample
-          splittweet[y].gsub!("@","@#{prefix}")
-        end
-      end
-      finaltweet=splittweet.join(" ") 
-      puts finaltweet.length
-      puts finaltweet[0..139].length 
-      if finaltweet.length<=140
-        puts finaltweet
-        Twitter.update(finaltweet)
-      else  
-        puts finaltweet[0..139]
-        Twitter.update(finaltweet[0..139])
-      
-      end
+      #Twitter.update(finaltweet)
+
       
 
       if conn.query("select  count(id) from tweets;").values.to_a[0][0].to_i>=50
