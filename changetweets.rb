@@ -35,12 +35,10 @@ end
     readout = conn.query("SELECT * from tweets").values.to_a
     @last50 = Array.new
     
-    if ARGV[2]==1
       readout.each_with_index do |x , y|
       
         @last50 << x[0]
       end  
-    end
     
    
     
