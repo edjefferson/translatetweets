@@ -50,7 +50,7 @@ end
       finaltweet=tweettext.send(ARGV[1]).trim140
       puts finaltweet
       
-      #Twitter.update(finaltweet)
+      Twitter.update(finaltweet)
 
       
 
