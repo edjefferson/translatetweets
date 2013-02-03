@@ -54,9 +54,9 @@ end
 
       finaltweet=tweettext.send(ARGV[1]).trim140
       puts finaltweet
-      if ARGV[2]==1
+
         Twitter.update(finaltweet)
-      end
+
       
 
       
