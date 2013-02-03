@@ -36,11 +36,12 @@ class String
   def trekalyser
     tgr = EngTagger.new
     tagged = tgr.add_tags(self)
-    startrekwords = ["Picard", "Enterprise", "Data", "Beverley", "Riker", "Wesley", "Guinan", "Troi"]
+    #startrekwords = ["Picard", "Enterprise", "Data", "Beverley", "Riker", "Wesley", "Guinan", "Troi"]
+    startrekwords = ["Costanza", "George", "Vandelay Industries"]
     nouns = tgr.get_nouns(tagged)
-    nouns.keys.each do |x|
-      self.gsub!(x,startrekwords.sample)
-    end
+    b = nouns.keys.sample
+    self.gsub!(b,startrekwords.sample)
+    
     return self
   end
 
