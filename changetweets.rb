@@ -49,9 +49,9 @@ end
     
     
     if !@last50.include?sid
+      begin
       
       
-
       finaltweet=tweettext.send(ARGV[1]).trim140
       puts finaltweet
 
@@ -73,7 +73,9 @@ end
         if conn.query("select  count(id) from tweets;").values.to_a[0][0].to_i>=50
           conn.query("DELETE FROM tweets using (select min(id) from tweets) r where id=r.min;")
         end
-      puts "DUPE"
+        puts "DUPE"
+      end
+      
       
       
     else
