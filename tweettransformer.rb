@@ -67,7 +67,6 @@ class String
       end
       
       results = Dinosaurus.lookup(splittweet[y])
-      results.synonyms[0]
       if results.synonyms[0] == nil
         newtweet << splittweet[y]
       else
@@ -78,6 +77,7 @@ class String
       
     end
     return newtweet.join(" ")
+    wait 20
     
   end
   
@@ -100,7 +100,6 @@ class String
       end
       
       results = Dinosaurus.lookup(splittweet[y])
-      results.antonyms[0]
       if results.antonyms[0] == nil
         newtweet << splittweet[y]
       else
