@@ -28,17 +28,12 @@ end
     config.oauth_token = ENV['YOUR_OAUTH_TOKEN']
     config.oauth_token_secret = ENV['YOUR_OAUTH_TOKEN_SECRET']
   end
-  
+  conn = PGconn.connect(ENV['DB_ADDRESS'], ENV['DB_PORT'], '', '', ENV['DB_NAME'], ENV['DB_USER'], ENV['DB_PASSWORD'])
+  readout = conn.query("SELECT id from since").values.to_a[0]
 
-  LatestTweet = LeTwitter.search("from:#{ENV['TWITTERHANDLE']}", :count => ARGV[0], :result_type => "recent").results.reverse.each do |status|
-    conn = PGconn.connect(ENV['DB_ADDRESS'], ENV['DB_PORT'], '', '', ENV['DB_NAME'], ENV['DB_USER'], ENV['DB_PASSWORD'])
-    readout = conn.query("SELECT * from tweets").values.to_a
-    @last50 = Array.new
+  LatestTweet = LeTwitter.search("from:#{ENV['TWITTERHANDLE']}", :count => ARGV[0], :result_type => "recent", :since_id => readout ).results.reverse.each do |status|
     
-      readout.each_with_index do |x , y|
-      
-        @last50 << x[0]
-      end  
+    
     
    
     
@@ -47,44 +42,36 @@ end
     tweettext=status.text
     sid=tweetid.to_s
     
-    
-    if !@last50.include?sid
       begin
       
       
       finaltweet=tweettext.send(ARGV[1]).trim140
       puts finaltweet
 
-        Twitter.update(finaltweet)
+        #Twitter.update(finaltweet)
 
       
 
       
 
-      if conn.query("select  count(id) from tweets;").values.to_a[0][0].to_i>=50
-        conn.query("DELETE FROM tweets using (select min(id) from tweets) r where id=r.min;")
-      end
+   
       
       puts "DONE A TWET"
     
-        conn.query("INSERT INTO tweets (id) VALUES (#{tweetid});")
+        conn.query("INSERT INTO since (id) VALUES (#{tweetid});")
       rescue Twitter::Error::Forbidden  
-        conn.query("INSERT INTO tweets (id) VALUES (#{tweetid});")
-        if conn.query("select  count(id) from tweets;").values.to_a[0][0].to_i>=50
-          conn.query("DELETE FROM tweets using (select min(id) from tweets) r where id=r.min;")
-        end
+        
         puts "DUPE"
       end
       
       
       
-    else
-      puts "NOT DONE A TWET"
+    
       
 
     
-    end  
-    conn.finish  
+      
+    
   end
-
+conn.finish  
  
