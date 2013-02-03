@@ -31,6 +31,15 @@ end
 
 
 class String
+  def trim140
+    tweet = self
+    while tweet.length>140
+      tweetwords=tweet.split(' ')
+      tweet=tweetwords[0..-2].join(' ') << "..."
+ 
+    end
+    return tweet
+  end
   
   
   def georgealyser
@@ -83,7 +92,7 @@ class String
         splittweet[y].reverse!
       end
     end
-    return splittweet.join(" ").reverse.gsub!(" ,",", ")
+    return splittweet.join(" ").reverse.gsub(" ,",", ")
   end 
   
   def syntweet
@@ -152,14 +161,6 @@ class String
   end
     
   
-  def trim140
-    tweet = self
-    while tweet.length>140
-      tweetwords=tweet.split(' ')
-      tweet=tweetwords[0..-2].join(' ') << "..."
- 
-    end
-    return tweet
-  end
+  
   
 end
