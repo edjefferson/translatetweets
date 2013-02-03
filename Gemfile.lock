@@ -8,6 +8,7 @@ GEM
       activesupport
       httparty
       rake
+    engtagger (0.1.2)
     faraday (0.8.4)
       multipart-post (~> 1.1)
     foreman (0.61.0)
@@ -45,6 +46,7 @@ PLATFORMS
 
 DEPENDENCIES
   dinosaurus
+  engtagger
   foreman
   microsoft_translator
   pg
