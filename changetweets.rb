@@ -30,7 +30,7 @@ end
   end
   
 
-  LatestTweet = LeTwitter.search("from:#{ENV['TWITTERHANDLE']}", :count => ARGV[0][0], :result_type => "recent").results.reverse.each do |status|
+  LatestTweet = LeTwitter.search("from:#{ENV['TWITTERHANDLE']}", :count => ARGV[0], :result_type => "recent").results.reverse.each do |status|
     conn = PGconn.connect(ENV['DB_ADDRESS'], ENV['DB_PORT'], '', '', ENV['DB_NAME'], ENV['DB_USER'], ENV['DB_PASSWORD'])
     readout = conn.query("SELECT * from tweets").values.to_a
     @last50 = Array.new
@@ -66,6 +66,7 @@ end
       
     else
       puts "NOT DONE A TWET"
+      
 
     
     end  
