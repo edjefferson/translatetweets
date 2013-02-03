@@ -39,6 +39,7 @@ class String
     #startrekwords = ["Picard", "Enterprise", "Data", "Beverley", "Riker", "Wesley", "Guinan", "Troi"]
     startrekwords = ["Costanza", "George", "Vandelay Industries"]
     nouns = tgr.get_nouns(tagged)
+    
     b = nouns.keys.sample
     self.gsub!(b,startrekwords.sample)
     

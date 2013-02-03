@@ -34,23 +34,31 @@ end
     conn = PGconn.connect(ENV['DB_ADDRESS'], ENV['DB_PORT'], '', '', ENV['DB_NAME'], ENV['DB_USER'], ENV['DB_PASSWORD'])
     readout = conn.query("SELECT * from tweets").values.to_a
     @last50 = Array.new
-    readout.each_with_index do |x , y|
+    
+    if ARGV[2]==1
+      readout.each_with_index do |x , y|
       
-      @last50 << x[0]
-    end  
+        @last50 << x[0]
+      end  
+    end
+    
+   
     
 
     tweetid=status.id
     tweettext=status.text
     sid=tweetid.to_s
     
-    if !@last50.include?sid
+    if !@last50.include?sid and tweettext[0]!="@" and tweettext["http"]==nil
+      
       
 
       finaltweet=tweettext.send(ARGV[1]).trim140
       puts finaltweet
+      if ARGV[2]==1
+        Twitter.update(finaltweet)
+      end
       
-      Twitter.update(finaltweet)
 
       
 
