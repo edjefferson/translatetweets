@@ -68,7 +68,12 @@ end
       puts "DONE A TWET"
     
         conn.query("INSERT INTO tweets (id) VALUES (#{tweetid});")
-      
+      rescue Twitter::Error::Forbidden  
+        conn.query("INSERT INTO tweets (id) VALUES (#{tweetid});")
+        if conn.query("select  count(id) from tweets;").values.to_a[0][0].to_i>=50
+          conn.query("DELETE FROM tweets using (select min(id) from tweets) r where id=r.min;")
+        end
+      puts "DUPE"
       
       
     else
