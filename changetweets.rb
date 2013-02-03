@@ -7,13 +7,14 @@ require './tweettransformer.rb'
 
 
 if ARGV.count <= 2
+  puts ARGV.count
   puts "include some arguments you idoit" 
   abort
    
 end
 
 
-puts ARGV[1].class
+
 
 
   
