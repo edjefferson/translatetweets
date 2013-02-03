@@ -33,7 +33,7 @@ end
 class String
   
   
-  def trekalyser
+  def georgealyser
     tgr = EngTagger.new
     tagged = tgr.add_tags(self)
     #startrekwords = ["Picard", "Enterprise", "Data", "Beverley", "Riker", "Wesley", "Guinan", "Troi"]
