@@ -49,7 +49,8 @@ end
     tweettext=status.text
     sid=tweetid.to_s
     
-    if !@last50.include?sid and tweettext[0]!="@" and tweettext["http"]==nil
+    
+    if !@last50.include?sid
       
       
 
