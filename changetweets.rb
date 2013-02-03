@@ -29,6 +29,7 @@ end
     config.oauth_token_secret = ENV['YOUR_OAUTH_TOKEN_SECRET']
   end
   puts LeTwitter
+  puts ENV['YOUR_CONSUMER_KEY']
   conn = PGconn.connect(ENV['DB_ADDRESS'], ENV['DB_PORT'], '', '', ENV['DB_NAME'], ENV['DB_USER'], ENV['DB_PASSWORD'])
   readout = conn.query("SELECT id from since").values.to_a[0]
 
