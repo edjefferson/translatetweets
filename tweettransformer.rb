@@ -45,7 +45,7 @@ class String
         splittweet[y].reverse!
       end
     end
-    return splittweet.join(" ").reverse 
+    return splittweet.join(" ").reverse.gsub!(" ,",", ")
   end 
   
   def syntweet
