@@ -49,7 +49,7 @@ class String
   end 
   
   def syntweet
-    dino = Dinosaurus.configure do |config|
+    Dinosaurus.configure do |config|
       config.api_key = ENV['DINOAPIKEY']
     end
     
@@ -57,17 +57,60 @@ class String
     strippedtweet2 = my_strip strippedtweet.to_s, "\\\"]"
     
     splittweet=strippedtweet2.split(' ')
+    newtweet = Array.new
     splittweet.each_with_index do |x, y|
       if splittweet[y][0,1]=="@"
         
-        results = dino.lookup(splittweet[y].gsub!("@",""))
-        puts results(syn)
+        
+       
         splittweet[y] << "@"
       end
-      results = dino.lookup(splittweet[y].gsub!("@",""))
-      puts results(syn)
+      
+      results = Dinosaurus.lookup(splittweet[y])
+      results.synonyms[0]
+      if results.synonyms[0] == nil
+        newtweet << splittweet[y]
+      else
+        newtweet << results.synonyms[0]
+      
+      end
+      
+      
     end
-    return splittweet.join(" ")
+    return newtweet.join(" ")
+    
+  end
+  
+  def anttweet
+    Dinosaurus.configure do |config|
+      config.api_key = ENV['DINOAPIKEY']
+    end
+    
+    strippedtweet = my_strip self.to_s, "[\\\""
+    strippedtweet2 = my_strip strippedtweet.to_s, "\\\"]"
+    
+    splittweet=strippedtweet2.split(' ')
+    newtweet = Array.new
+    splittweet.each_with_index do |x, y|
+      if splittweet[y][0,1]=="@"
+        
+        
+       
+        splittweet[y] << "@"
+      end
+      
+      results = Dinosaurus.lookup(splittweet[y])
+      results.antonyms[0]
+      if results.antonyms[0] == nil
+        newtweet << splittweet[y]
+      else
+        newtweet << results.antonyms[0]
+      
+      end
+      
+      
+    end
+    return newtweet.join(" ")
     
   end
     

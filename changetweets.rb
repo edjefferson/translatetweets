@@ -44,13 +44,13 @@ end
     tweettext=status.text
     sid=tweetid.to_s
     
-    if @last50.include?sid
+    if !@last50.include?sid
       
 
       finaltweet=tweettext.send(ARGV[1]).trim140
       puts finaltweet
       
-      Twitter.update(finaltweet)
+      #Twitter.update(finaltweet)
 
       
 
