@@ -6,7 +6,7 @@ require './tweettransformer.rb'
 
 
 
-if ARGV.count < 2
+if ARGV.count < 1
   puts ARGV.count
   puts "include some arguments you idoit" 
   abort
@@ -33,7 +33,7 @@ end
   puts LeTwitter
   puts ENV['YOUR_CONSUMER_KEY']
   conn = PGconn.connect(ENV['DB_ADDRESS'], ENV['DB_PORT'], '', '', ENV['DB_NAME'], ENV['DB_USER'], ENV['DB_PASSWORD'])
-  result = con.query("select lasttweet from lasttweet where id=1")
+  result = conn.query("select lasttweet from lasttweet where id=1")
 
   readout = result.fetch_row
 
@@ -52,7 +52,7 @@ end
       begin
       
       
-      finaltweet=tweettext.send(ARGV[1]).trim140
+      finaltweet=tweettext.send(ARGV[0]).trim140
       puts finaltweet
 
         Twitter.update(finaltweet)
