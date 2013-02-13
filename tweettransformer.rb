@@ -45,14 +45,23 @@ class String
   def georgealyser
     tgr = EngTagger.new
     tagged = tgr.add_tags(self)
-    #startrekwords = ["Picard", "Enterprise", "Data", "Beverley", "Riker", "Wesley", "Guinan", "Troi"]
-    startrekwords = ["Costanza", "George", "Vandelay Industries"]
+    georgewords = ["Costanza", "George", "Costanza", "George", "Vandelay Industries", "George Costanza", "George Costanza", "Importer/Exporter"]
     nouns = tgr.get_nouns(tagged)
-    
+    nouns.delete_if {|key, value| key[0]==":"}
+    nouns.delete_if {|key, value| key[0]=="@"}
+    nouns.delete("http")
     b = nouns.keys.sample
-    self.gsub!(b,startrekwords.sample)
-    
+    c = nouns.keys.sample
+    self.gsub!("Alain","George")
+    self.gsub!("de Botton","Costanza")
+    self.gsub!("Religion for Atheists","Religion for Marine Biologists") 
+    self.gsub!("Atheists","marine biologists") 
+    self.gsub!("atheists","marine biologists") 
+    self.gsub!(b,georgewords.sample)
+    self.gsub!(c,georgewords.sample)
+
     return self
+   
   end
 
   def translatetweet

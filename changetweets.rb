@@ -36,7 +36,6 @@ end
   con = Mysql.new ENV['DB_HOST'],ENV['DB_USER'],ENV['DB_PW'],ENV['DB_NAME']
   
   
-  
 
   result = con.query("select lasttweet from lasttweet where id=1")
 
