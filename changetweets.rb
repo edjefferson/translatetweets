@@ -38,7 +38,7 @@ end
   readout = result.fetch_row
 
 
-  LatestTweet = LeTwitter.search("from:#{ENV['TWITTERHANDLE']}", :count => ARGV[0], :result_type => "recent", :since_id => readout[0].to_i  ).results.reverse.each do |status|
+  LatestTweet = LeTwitter.search("from:#{ENV['TWITTERHANDLE']}", :result_type => "recent", :since_id => readout[0].to_i  ).results.reverse.each do |status|
     
     
     
