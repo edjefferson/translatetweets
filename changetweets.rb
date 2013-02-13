@@ -70,7 +70,7 @@ end
       
       puts "DONE A TWET"
     
-        con.query("update lasttweet set lasttweet=#{tweetid} where id=1)")
+        con.query("update lasttweet set lasttweet=#{tweetid} where id=1")
       rescue Twitter::Error::Forbidden  
         
         puts "DUPE"
