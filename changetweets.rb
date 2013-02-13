@@ -28,12 +28,17 @@ end
     config.oauth_token = ENV['YOUR_OAUTH_TOKEN']
     config.oauth_token_secret = ENV['YOUR_OAUTH_TOKEN_SECRET']
   end
+  
+
   puts LeTwitter
   puts ENV['YOUR_CONSUMER_KEY']
   conn = PGconn.connect(ENV['DB_ADDRESS'], ENV['DB_PORT'], '', '', ENV['DB_NAME'], ENV['DB_USER'], ENV['DB_PASSWORD'])
-  readout = conn.query("SELECT id from since").values.to_a[0]
+  result = con.query("select lasttweet from lasttweet where id=1")
 
-  LatestTweet = LeTwitter.search("from:#{ENV['TWITTERHANDLE']}", :count => ARGV[0], :result_type => "recent", :since_id => readout ).results.reverse.each do |status|
+  readout = result.fetch_row
+
+
+  LatestTweet = LeTwitter.search("from:#{ENV['TWITTERHANDLE']}", :count => ARGV[0], :result_type => "recent", :since_id => readout[0].to_i  ).results.reverse.each do |status|
     
     
     
@@ -50,7 +55,7 @@ end
       finaltweet=tweettext.send(ARGV[1]).trim140
       puts finaltweet
 
-        #Twitter.update(finaltweet)
+        Twitter.update(finaltweet)
 
       
 
