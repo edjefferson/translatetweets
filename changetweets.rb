@@ -1,5 +1,5 @@
 require 'twitter'
-require 'pg'
+require 'mysql'
 
 require './tweettransformer.rb'
 
@@ -30,10 +30,15 @@ end
   end
   
 
-  puts LeTwitter
-  puts ENV['YOUR_CONSUMER_KEY']
-  conn = PGconn.connect(ENV['DB_ADDRESS'], ENV['DB_PORT'], '', '', ENV['DB_NAME'], ENV['DB_USER'], ENV['DB_PASSWORD'])
-  result = conn.query("select lasttweet from lasttweet where id=1")
+
+
+  #heroku config:add DB_HOST= DB_USER= DB_PW= DB_NAME=
+  con = Mysql.new ENV['DB_HOST'],ENV['DB_USER'],ENV['DB_PW'],ENV['DB_NAME']
+  
+  
+  
+
+  result = con.query("select lasttweet from lasttweet where id=1")
 
   readout = result.fetch_row
 
@@ -65,7 +70,7 @@ end
       
       puts "DONE A TWET"
     
-        conn.query("INSERT INTO since (id) VALUES (#{tweetid});")
+        con.query("update lasttweet set lasttweet=#{tweetid} where id=1);")
       rescue Twitter::Error::Forbidden  
         
         puts "DUPE"
