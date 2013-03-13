@@ -59,8 +59,10 @@ end
       finaltweet=tweettext.send(ARGV[0]).trim140
       puts finaltweet
 
-        Twitter.update(finaltweet)
-
+        
+      if finaltweet!="no nouns"
+         Twitter.update(finaltweet)
+      end
       
 
       
