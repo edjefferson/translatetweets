@@ -2,6 +2,7 @@ require 'twitter'
 require 'mysql'
 
 require './tweettransformer.rb'
+require './twitterpatch.rb'
 
 
 
@@ -41,7 +42,7 @@ end
 
   readout = result.fetch_row
 
-
+  puts readout[0].to_i 
   LatestTweet = LeTwitter.search("from:#{ENV['TWITTERHANDLE']}", :result_type => "recent", :since_id => readout[0].to_i  ).results.reverse.each do |status|
     
     
