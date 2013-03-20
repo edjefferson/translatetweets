@@ -66,6 +66,7 @@ class String
           return "no nouns"
 
        end
+    end
 
   def translatetweet
     @translator = MicrosoftTranslator::Client.new(ENV['MTCLIENTID'], ENV['MTCLIENTSECRET'])
@@ -174,5 +175,5 @@ class String
     
   
   
-  
+
 end
