@@ -37,12 +37,12 @@ LatestTweet = LeTwitter.search("from:#{ENV['TWITTERHANDLE']}", :result_type => "
 
         
       if finaltweet!="no nouns"
-         #Twitter.update(finaltweet)
+         Twitter.update(finaltweet)
       end
 
       puts "DONE A TWET"
     
-      #con.query("update lasttweet set lasttweet=#{tweetid} where id=1")
+      con.query("update lasttweet set lasttweet=#{tweetid} where id=1")
    rescue Twitter::Error::Forbidden  
         
       puts "DUPE"
