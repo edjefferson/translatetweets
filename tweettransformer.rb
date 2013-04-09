@@ -42,6 +42,22 @@ class String
   end
   
   
+  def hashtweet
+    splittweet = self.split(' ')
+    splittweet.each_with_index do |x, y|
+    
+      if splittweet[y][0,1]!="#"
+        x.reverse! << "#"
+        x.reverse!
+      
+      end
+    end
+    return splittweet.join(' ')
+    
+  end
+  
+  
+  
   def georgealyser
     tgr = EngTagger.new
     tagged = tgr.add_tags(self)
@@ -70,8 +86,7 @@ class String
 
   def translatetweet
     @translator = MicrosoftTranslator::Client.new(ENV['MTCLIENTID'], ENV['MTCLIENTSECRET'])
-    puts self
-    puts self.class
+
   
     translatedtweet = @translator.translate(self,"en","fr","text/html")
     puts translatedtweet
