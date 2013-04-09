@@ -26,6 +26,8 @@ result = con.query("select lasttweet from lasttweet where id=1")
 
 readout = result.fetch_row
 
+puts LeTwitter
+
 LatestTweet = LeTwitter.search("from:#{ENV['TWITTERHANDLE']}", :result_type => "recent", :since_id => readout[0].to_i  ).results.reverse.each do |status|
    tweetid=status.id
    tweettext=status.text
