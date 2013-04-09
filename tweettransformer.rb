@@ -46,7 +46,7 @@ class String
     splittweet = self.split(' ')
     splittweet.each_with_index do |x, y|
     
-      if splittweet[y][0,1]!="#"
+      if splittweet[y][0,1]!="#" and splittweet[y][0,4]!="http"
         x.reverse! << "#"
         x.reverse!
       
