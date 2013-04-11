@@ -52,7 +52,7 @@ class String
       
       end
     end
-    return splittweet.join(' ')
+    return splittweet.join(' ').gsub('~apos~','\'') 
     
   end
   
