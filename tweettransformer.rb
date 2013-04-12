@@ -42,20 +42,15 @@ class String
   end
   
   
+
   def hashtweet
     splittweet = self.split(' ')
-    splittweet.each_with_index do |x, y|
     
-      if splittweet[y][0,1]!="#" and splittweet[y][0,4]!="http"
-        x.reverse! << "#"
-        x.reverse!
-      
-      end
-    end
-    return splittweet.join(' ').gsub('~apos~','\'') 
+    splittweet.map! { |x| ((x[0,1]!="#" and x[0,4]!="http") ? "#" << x : x ) }
     
-  end
-  
+    return splittweet.join(' ')
+    
+  end  
   
   
   def georgealyser
