@@ -91,7 +91,7 @@ class String
     strippedtweet2 = my_strip strippedtweet.to_s, "\\\"]"
       
     splittweet=translatedtweet.split(' ')
-     splitweet.map! { |x| (x[0,1]=="@" ? x.gsub!("@","@#{["le","la","un","une"].sample}" : x ) }
+    splittweet.map! { |x| (x[0,1]=="@" ? x.gsub!("@","@#{["le","la","un","une"].sample}") : x ) }
     return splittweet.join(" ") 
 
   end
