@@ -52,7 +52,7 @@ class String
     
   end  
   
-  
+=begin  
   def georgealyser
     tgr = EngTagger.new
     tagged = tgr.add_tags(self)
@@ -80,8 +80,7 @@ class String
      return "no nouns"
   end
   end
- 
-
+=end
   def translatetweet
     @translator = MicrosoftTranslator::Client.new(ENV['MTCLIENTID'], ENV['MTCLIENTSECRET'])
 
