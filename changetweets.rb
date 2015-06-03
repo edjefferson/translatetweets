@@ -2,7 +2,6 @@ require 'twitter'
 require 'pg'
 require 'clockwork'
 require './tweettransformer.rb'
-require './twitterpatch.rb'
 
 
 
