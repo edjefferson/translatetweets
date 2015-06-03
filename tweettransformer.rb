@@ -56,28 +56,31 @@ class String
   def georgealyser
     tgr = EngTagger.new
     tagged = tgr.add_tags(self)
-    georgewords = ["Costanza", "George", "Costanza", "George", "Vandelay Industries", "George Costanza", "George Costanza", "Importer/Exporter"]
+    georgewords = ["Costanza", "George", "Vandelay Industries", "George Costanza", "Importer/Exporter"]
     nouns = tgr.get_nouns(tagged)
+  
+  
     nouns.delete_if {|key, value| key[0]==":"}
     nouns.delete_if {|key, value| key[0]=="@"}
     nouns.delete("http")
-       if nouns.size>0
-          b = nouns.keys.sample
-          nouns.delete(b)
-          c = nouns.keys.sample
-          self.gsub!("Alain","George")
-          self.gsub!("de Botton","Costanza")
-          self.gsub!("Religion for Atheists","Religion for Marine Biologists") 
-          self.gsub!("Atheists","marine biologists") 
-          self.gsub!("atheists","marine biologists") 
-          self.gsub!(b,georgewords.sample)
-          self.gsub!(c,georgewords.sample)
-          return self
-       else
-          return "no nouns"
-
-       end
-    end
+    if nouns.size>0
+    b = nouns.keys.sample
+    nouns.delete(b)
+    c = nouns.keys.sample
+    self.gsub!("Alain","George")
+    self.gsub!("de Botton","Costanza")
+    self.gsub!("Religion for Atheists","Religion for Marine Biologists") 
+    self.gsub!("Atheists","marine biologists") 
+    self.gsub!("atheists","marine biologists") 
+    self.gsub!(b,georgewords.sample)
+    self.gsub!(c,georgewords.sample)
+    return self
+  
+  else
+     return "no nouns"
+  end
+  end
+ 
 
   def translatetweet
     @translator = MicrosoftTranslator::Client.new(ENV['MTCLIENTID'], ENV['MTCLIENTSECRET'])

@@ -1,8 +1,9 @@
-source :rubygems
+source 'https://rubygems.org'
+ruby '2.1.3'
 gem 'foreman'
 gem 'userstream'
 gem 'twitter'
-gem 'mysql'
+gem 'pg'
 gem 'microsoft_translator'
 gem 'dinosaurus'
 gem 'engtagger'
