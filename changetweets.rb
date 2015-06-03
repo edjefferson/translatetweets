@@ -21,7 +21,6 @@ end
 
 
 original_id = twitter.user("edjeff").id
-puts twitter.mentions_timeline[0].text
 stream.filter(follow:"#{original_id}") do |object|
   if object.is_a?(Twitter::Tweet)
     finaltweet = object.text.send(ENV['TRANSLATE_TYPE']).trim140
