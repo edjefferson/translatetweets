@@ -1,1 +1,1 @@
-worker:bundle exec clockwork changetweets.rb
+worker:bundle exec ruby changetweets.rb

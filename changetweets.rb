@@ -24,6 +24,22 @@ def stream
   end
 end
 
+
+original_id = twitter.user("edjeff").id
+puts twitter.mentions_timeline[0].text
+stream.filter(follow:"#{original_id}") do |object|
+  if object.is_a?(Twitter::Tweet)
+    finaltweet = object.text.send(ENV['TRANSLATE_TYPE']).trim140
+    puts finaltweet
+    
+    if finaltweet!="no nouns"
+       twitter.update(finaltweet)
+    end
+
+    puts "DONE A TWET"
+  end
+end
+
 #heroku config:add DB_HOST= DB_USER= DB_PW= DB_NAME=
 
 =begin
@@ -36,6 +52,8 @@ result = con.exec("select lasttweet from lasttweet where id=1")
 readout = result.fetch_row
 
 =end
+
+=begin
 
 readout = [1,2]
 
@@ -62,5 +80,5 @@ twitter.search("from:#{ENV['TWITTERHANDLE']}", :result_type => "recent", :since_
    end
 end
 
-
+=end
 
