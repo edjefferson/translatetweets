@@ -1,5 +1,4 @@
 require 'twitter'
-require 'pg'
 require './tweettransformer.rb'
 
 
