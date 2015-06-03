@@ -1,5 +1,5 @@
 require 'twitter'
-require 'mysql'
+require 'pg'
 
 require './tweettransformer.rb'
 require './twitterpatch.rb'
