@@ -33,6 +33,7 @@ stream.filter(follow:"#{original_id}") do |object|
     puts finaltweet
     
     if finaltweet!="no nouns"
+       sleep rand(1..120)
        twitter.update(finaltweet)
     end
 
