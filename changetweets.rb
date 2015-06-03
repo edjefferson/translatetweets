@@ -4,22 +4,11 @@ require 'clockwork'
 require './tweettransformer.rb'
 require './twitterpatch.rb'
 
-module Clockwork
-  handler do |job|
-    puts "Running #{job}"
-  end
 
-  # handler receives the time when job is prepared to run in the 2nd argument
-  # handler do |job, time|
-  #   puts "Running #{job}, at #{time}"
-  # end
-
-  every(10.minutes, changetweet)
-end
 
 def changetweet
 
-LeTwitter = Twitter.configure do |config|
+twitter = Twitter.configure do |config|
     config.consumer_key = ENV['YOUR_CONSUMER_KEY']
     config.consumer_secret = ENV['YOUR_CONSUMER_SECRET']
     config.oauth_token = ENV['YOUR_OAUTH_TOKEN']
@@ -35,7 +24,7 @@ result = con.exec("select lasttweet from lasttweet where id=1")
 readout = result.fetch_row
 
 
-LatestTweet = LeTwitter.search("from:#{ENV['TWITTERHANDLE']}", :result_type => "recent", :since_id => readout[0].to_i  ).results.reverse.each do |status|
+twitter.search("from:#{ENV['TWITTERHANDLE']}", :result_type => "recent", :since_id => readout[0].to_i  ).results.reverse.each do |status|
    tweetid=status.id
    tweettext=status.text
    sid=tweetid.to_s
@@ -58,5 +47,18 @@ LatestTweet = LeTwitter.search("from:#{ENV['TWITTERHANDLE']}", :result_type => "
    end
 end
 
+end
+
+module Clockwork
+  handler do |job|
+    puts "Running #{job}"
+  end
+
+  # handler receives the time when job is prepared to run in the 2nd argument
+  # handler do |job, time|
+  #   puts "Running #{job}, at #{time}"
+  # end
+
+  every(10.minutes, changetweet)
 end
  
