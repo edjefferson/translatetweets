@@ -82,10 +82,10 @@ class String
   end
 =end
   def translatetweet
-    @translator = MicrosoftTranslator::Client.new(ENV['MTCLIENTID'], ENV['MTCLIENTSECRET'])
+    translator = MicrosoftTranslator::Client.new(ENV['MTCLIENTID'], ENV['MTCLIENTSECRET'])
 
   
-    translatedtweet = @translator.translate(self,"en","fr","text/html")
+    translatedtweet = translator.translate(self,"en","fr","text/html")
     puts translatedtweet
 
     
