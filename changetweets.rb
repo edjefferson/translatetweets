@@ -19,10 +19,10 @@ LeTwitter = Twitter.configure do |config|
 end
 
 #heroku config:add DB_HOST= DB_USER= DB_PW= DB_NAME=
-con = Mysql.new ENV['DB_HOST'],ENV['DB_USER'],ENV['DB_PW'],ENV['DB_NAME']
+con = PGconn.new(ENV['DB_STRING')
 
 
-result = con.query("select lasttweet from lasttweet where id=1")
+result = con.excec("select lasttweet from lasttweet where id=1")
 
 readout = result.fetch_row
 
