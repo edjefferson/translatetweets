@@ -1,1 +1,1 @@
-worker:bundle exec ruby changetweets.rb
+worker: ruby changetweets.rb
