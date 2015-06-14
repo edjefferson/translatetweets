@@ -23,8 +23,6 @@ end
 original_id = twitter.user("edjeff").id
 stream.filter(follow:"#{original_id}") do |object|
   if object.is_a?(Twitter::Tweet)
-    puts object
-    puts object.inspect
     if object.user.id == original_id
       finaltweet = object.text.send(ENV['TRANSLATE_TYPE']).trim140
       puts finaltweet
