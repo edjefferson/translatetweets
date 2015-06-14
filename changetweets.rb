@@ -1,6 +1,5 @@
 require 'twitter'
 require './tweettransformer.rb'
-
 def twitter
   @twitter ||= Twitter::REST::Client.new do |config|
     config.consumer_key = ENV['YOUR_CONSUMER_KEY']
@@ -19,20 +18,25 @@ def stream
   end
 end
 
-
+puts "waiting for tweets"
 original_id = twitter.user("edjeff").id
+puts original_id
 stream.filter(follow:"#{original_id}") do |object|
   if object.is_a?(Twitter::Tweet)
-    puts object.user.id
-    finaltweet = object.text.send(ENV['TRANSLATE_TYPE']).trim140
-    puts finaltweet
+    if object.user.id == original_id
+      finaltweet = object.text.send(ENV['TRANSLATE_TYPE']).trim140
+      puts finaltweet
     
-    if finaltweet!="no nouns"
-       sleep rand(1..120)
-       twitter.update(finaltweet)
-    end
+      if finaltweet!="no nouns"
+         sleep rand(1..120)
+         twitter.update(finaltweet)
+      end
 
-    puts "DONE A TWET"
+      puts "DONE A TWET"
+      
+    else
+      puts "NOT MY TWET"
+    end
   end
 end
 
