@@ -23,19 +23,16 @@ end
 original_id = twitter.user("edjeff").id
 stream.filter(follow:"#{original_id}") do |object|
   if object.is_a?(Twitter::Tweet)
-    if object.user.id == original_id
-      finaltweet = object.text.send(ENV['TRANSLATE_TYPE']).trim140
-      puts finaltweet
+    puts object.user.id
+    finaltweet = object.text.send(ENV['TRANSLATE_TYPE']).trim140
+    puts finaltweet
     
-      if finaltweet!="no nouns"
-         sleep rand(1..120)
-         twitter.update(finaltweet)
-      end
-
-      puts "DONE A TWET"
-    else
-      puts "NOT MY TWET"
+    if finaltweet!="no nouns"
+       sleep rand(1..120)
+       twitter.update(finaltweet)
     end
+
+    puts "DONE A TWET"
   end
 end
 
