@@ -1,5 +1,5 @@
 source 'https://rubygems.org'
-ruby '2.2.1'
+ruby '2.1.3'
 gem 'twitter'
 gem 'microsoft_translator'
 gem 'dinosaurus'
